@@ -11,11 +11,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="372dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Chương trình tự động gửi dữ liệu GPS lên Server"
-        app:layout_constraintBottom_toTopOf="@+id/Hi_acc"
+        app:layout_constraintBottom_toTopOf="@+id/intent_map"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,9 +59,11 @@
         android:id="@+id/intent_map"
         android:layout_width="172dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="27dp"
         android:layout_marginEnd="16dp"
         android:text="xem trên bản đồ"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="436dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </android.support.constraint.ConstraintLayout>

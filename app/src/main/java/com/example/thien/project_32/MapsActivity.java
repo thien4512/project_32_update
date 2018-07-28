@@ -1,10 +1,17 @@
 package com.example.thien.project_32;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.view.GestureDetector;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,9 +37,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LatLng my_ll = new LatLng(10.774136, 106.651757);
     LatLng my_ll_2 = new LatLng(10.776136, 106.654757);
     Button Clear;
+    String my_local;
+    LatLng my_ll_3;
+    double my_lat, my_lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         Clear = (Button) findViewById(R.id.clear_position);
@@ -44,9 +55,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 mMap.clear();
+                mylist_ll = new ArrayList<LatLng>();
             }
         });
+    }
 
+    private  BroadcastReceiver  bReceiver = new BroadcastReceiver(){
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //put here whaterver you want your activity to do with the intent received
+           // my_local = intent.getDataString();
+            //my_local = intent.getStringExtra("Lat");
+            my_lat = Double.parseDouble(intent.getStringExtra("Lat"));
+            my_lng = Double.parseDouble(intent.getStringExtra("Lng"));
+            my_ll_3 = new LatLng(my_lat,my_lng);
+            mylist_ll.add(my_ll_3);
+            drawPolyLineOnMap(mylist_ll);
+            //Toast.makeText(getApplicationContext(),String.valueOf(my_lat)+","+String.valueOf(my_lng),Toast.LENGTH_LONG).show();
+        }
+    };
+    protected void onResume(){
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("message"));
+    }
+    protected void onPause (){
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
     }
 
 
@@ -69,10 +103,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         //mMap.addMarker(new MarkerOptions().position(my_ll).title("My Address 2"));
         mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
-        mylist_ll.add(sydney);
-        mylist_ll.add(my_ll);
-        mylist_ll.add(my_ll_2);
-        drawPolyLineOnMap(mylist_ll);
+        //mylist_ll.add(sydney);
+        //mylist_ll.add(my_ll);
+        //mylist_ll.add(my_ll_2);
+        //drawPolyLineOnMap(mylist_ll);
 
     }
 

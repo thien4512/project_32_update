@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    Button button_1, button_2 , intent_map;
+    Button button_1, button_2, intent_map;
     TextView hi_acc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         intent_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Toast.makeText(getApplicationContext(),"abc",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startService(intent);
+                startActivity(intent);
             }
         });
     }

@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -55,16 +56,22 @@ public class MyService extends Service {
             //Toast.makeText(getApplicationContext(),location.toString(),Toast.LENGTH_SHORT).show();
             local=(location.toString()).split(" ");
             temp1=local[1].split(",");
-            lat=temp1[0]+"."+temp1[1];
-            lng=temp1[2]+"."+temp1[3];
+            if (local[0].equals("Location[network")==false) {
+                lat = temp1[0] + "." + temp1[1];
+                lng = temp1[2] + "." + temp1[3];
             //Toast.makeText(getApplicationContext(),"lat:"+lat+" lng:"+lng+" id:"+name_MyService,Toast.LENGTH_SHORT).show();
             // Toast.makeText(getApplicationContext(),"lat:"+lat+" lng:"+lng+" id:"+name_MyService,800).show();
             //t.cancel();
-            t = Toast.makeText(getApplicationContext(),"GPS is running",Toast.LENGTH_SHORT);
+            t = Toast.makeText(getApplicationContext(),local[0],Toast.LENGTH_SHORT);
             t.show();
             msjsToast.add(t);
             request_post_for_insert();
+           /*-------đẩy dữ liệu qua Map------*/
+            sendBroadcast(true);
+            }
         }
+
+
 
         @Override
         public void onProviderDisabled(String provider)
@@ -197,5 +204,12 @@ public class MyService extends Service {
             }
         }
         msjsToast.clear();
+    }
+
+    private void sendBroadcast (boolean success){
+        Intent intent = new Intent ("message"); //put the same message as in the filter you used in the activity when registering the receiver
+        intent.putExtra("Lat", lat);
+        intent.putExtra("Lng", lng);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
