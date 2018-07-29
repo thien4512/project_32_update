@@ -62,7 +62,7 @@ public class MyService extends Service {
             //Toast.makeText(getApplicationContext(),"lat:"+lat+" lng:"+lng+" id:"+name_MyService,Toast.LENGTH_SHORT).show();
             // Toast.makeText(getApplicationContext(),"lat:"+lat+" lng:"+lng+" id:"+name_MyService,800).show();
             //t.cancel();
-            t = Toast.makeText(getApplicationContext(),local[0],Toast.LENGTH_SHORT);
+            t = Toast.makeText(getApplicationContext(),"Updating...",Toast.LENGTH_SHORT);
             t.show();
             msjsToast.add(t);
             request_post_for_insert();

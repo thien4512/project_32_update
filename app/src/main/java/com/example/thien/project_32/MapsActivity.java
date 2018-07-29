@@ -40,6 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String my_local;
     LatLng my_ll_3;
     double my_lat, my_lng;
+    int a = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mylist_ll.add(my_ll_3);
             drawPolyLineOnMap(mylist_ll);
             //Toast.makeText(getApplicationContext(),String.valueOf(my_lat)+","+String.valueOf(my_lng),Toast.LENGTH_LONG).show();
+            if(a==0) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(mylist_ll.get(0)));
+                mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
+                a = 1;
+            }
         }
     };
     protected void onResume(){
@@ -98,11 +104,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(10.773136, 106.651757);
+        LatLng sydney = new LatLng(10.773136, 106.551757);
+        //LatLng sydney = mylist_ll.get(0);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("My address"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         //mMap.addMarker(new MarkerOptions().position(my_ll).title("My Address 2"));
-        mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
+
         //mylist_ll.add(sydney);
         //mylist_ll.add(my_ll);
         //mylist_ll.add(my_ll_2);
@@ -126,8 +133,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         final LatLngBounds bounds = builder.build();
-        mMap.addMarker(new MarkerOptions().position(list.get(0)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_name_2)).title("My address"));
-        mMap.addMarker(new MarkerOptions().position(list.get(list.size()-1)).title("My address 2"));
+        mMap.addMarker(new MarkerOptions().position(list.get(0)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_name_2)).title("Start:"+my_javaclass.name));
+        mMap.addMarker(new MarkerOptions().position(list.get(list.size()-1)).title(my_javaclass.name));
 
         //BOUND_PADDING is an int to specify padding of bound.. try 100.
         //CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,30);
