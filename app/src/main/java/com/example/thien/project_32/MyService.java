@@ -7,8 +7,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -50,11 +51,12 @@ public class MyService extends Service {
 
         @Override
         public void onLocationChanged(Location location)
-        {
+            {
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
             //Toast.makeText(getApplicationContext(),location.toString(),Toast.LENGTH_SHORT).show();
             local=(location.toString()).split(" ");
+            local[1]=local[1].replace(".",",");
             temp1=local[1].split(",");
             if (local[0].equals("Location[network")==false) {
                 lat = temp1[0] + "." + temp1[1];
@@ -70,8 +72,6 @@ public class MyService extends Service {
             sendBroadcast(true);
             }
         }
-
-
 
         @Override
         public void onProviderDisabled(String provider)
@@ -94,7 +94,7 @@ public class MyService extends Service {
 
     LocationListener[] mLocationListeners = new LocationListener[] {
             new LocationListener(LocationManager.GPS_PROVIDER),
-            new LocationListener(LocationManager.NETWORK_PROVIDER)
+            //new LocationListener(LocationManager.NETWORK_PROVIDER)
     };
 
     @Override
@@ -112,7 +112,6 @@ public class MyService extends Service {
         return START_STICKY;
     }
 
-
     @Override
     public void onCreate()
     {
@@ -121,7 +120,7 @@ public class MyService extends Service {
         Log.e(TAG, "onCreate");
         requestQueue = Volley.newRequestQueue(this);
         initializeLocationManager();
-        try {
+      /*  try {
             mLocationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                     mLocationListeners[1]);
@@ -129,7 +128,7 @@ public class MyService extends Service {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "network provider does not exist, " + ex.getMessage());
-        }
+        }   */
         try {
             mLocationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
@@ -155,7 +154,6 @@ public class MyService extends Service {
                 }
             }
         }
-
     }
 
     private void initializeLocationManager() {

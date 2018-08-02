@@ -29,7 +29,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/button_2"
         app:layout_constraintEnd_toStartOf="@+id/button_2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_2" />
+        app:layout_constraintTop_toTopOf="@+id/button_2"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button_2"
